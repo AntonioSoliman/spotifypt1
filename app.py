@@ -5,7 +5,7 @@ from spotipy.oauth2 import SpotifyOAuth
 #le tue credenziali le trovi nella dashboard di prima
 SPOTIFY_CLIENT_ID = "d74cb805ae4f4e9c87c5d361d8adade3"
 SPOTIFY_CLIENT_SECRET = "3a61d65da5914d1789080bccbc68e0fd"
-SPOTIFY_REDIRECT_URI = "http://127.0.0.1:5000/callback" #dopo il login andiamo qui
+SPOTIFY_REDIRECT_URI = "https://turbo-guide-wr7jqjp4vp6xh9pqq-5000.app.github.dev/callback" #dopo il login andiamo qui
 
 app = Flask(__name__)
 app.secret_key = 'chiave_per_session' #ci serve per identificare la sessione

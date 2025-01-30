@@ -1,44 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profilo Utente</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
 </head>
 <body>
-<h1>Benvenuto, {{ user_info['display_name'] }}!</h1>
-{% if user_info['images'] %}
-<img src="{{ user_info['images'][0]['url'] }}" width="200" alt="Immagine profilo">
-{% endif %}
-<h2>Le tue Playlist:</h2>
-{% if playlists %}
-<table>
-<thead>
-<tr>
-<th>|Nome Playlist|</th>
-<th>|Numero di Brani|</th>
-<th>|Copertina|</th>
-</tr>
-</thead>
-<tbody>
-{% for playlist in playlists %}
-<tr>
-<td>{{ playlist['name'] }}</td>
-<td>{{ playlist['tracks']['total'] }}</td>
-<td>
-{% if playlist['images'] %}
-<img src="{{ playlist['images'][0]['url'] }}" width="50" alt="Copertina playlist">
-{% else %}
-Nessuna immagine
-{% endif %}
-</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-{% else %}
-<p>Non hai playlist disponibili.</p>
-{% endif %}
-<a href="{{ url_for('logout') }}">Logout</a>
+    <h1>Benvenuto, {{ user_info['display_name'] }}!</h1>
+
+    {% if user_info['images'] %}
+        <img src="{{ user_info['images'][0]['url'] }}" width="200" alt="Immagine profilo">
+    {% endif %}
+
+    <h2>Le tue Playlist:</h2>
+
+    {% if playlists %}
+        <table>
+            <thead>
+                <tr>
+                    <th>| Nome Playlist |</th>
+                    <th>| Numero di Brani |</th>
+                    <th>| Copertina |</th>
+                    <th>| Azione |</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for playlist in playlists %}
+                    <tr>
+                        <td>{{ playlist['name'] }}</td>
+                        <td>{{ playlist['tracks']['total'] }}</td>
+                        <td>
+                            {% if playlist['images'] %}
+                                <img src="{{ playlist['images'][0]['url'] }}" width="50" alt="Copertina playlist">
+                            {% else %}
+                                Nessuna immagine
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('home', playlist_id=playlist['id']) }}">Visualizza Canzoni</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Non hai playlist disponibili.</p>
+    {% endif %}
+
+    {% if tracks %}
+        <h2>Brani della Playlist:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>| Titolo |</th>
+                    <th>| Artista |</th>
+                    <th>| Album |</th>
+                    <th>| Copertina |</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for track in tracks %}
+                    <tr>
+                        <td>{{ track['name'] }}</td>
+                        <td>{{ track['artist'] }}</td>
+                        <td>{{ track['album'] }}</td>
+                        <td>
+                            {% if track['cover'] %}
+                                <img src="{{ track['cover'] }}" width="50" alt="Copertina album">
+                            {% else %}
+                                Nessuna immagine
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}">Logout</a>
 </body>
 </html>
